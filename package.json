@@ -11,7 +11,9 @@
     "lint": "eslint . --fix",
     "prepare": "husky install",
     "migration:up": "sequelize db:migrate",
-    "migration:down": "sequelize db:migrate:undo:all"
+    "migration:down": "sequelize db:migrate:undo:all",
+    "seed:up": "sequelize db:seed:all",
+    "seed:down": "sequelize db:seed:undo:all"
   },
   "author": "Richard Tang",
   "license": "ISC",
