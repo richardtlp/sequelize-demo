@@ -1,7 +1,10 @@
 const { BookRouter } = require('../book-route')
 
 describe('test book routes', () => {
-  const routes = [{ path: '/', method: 'get' }]
+  const routes = [
+    { path: '/', method: 'get' },
+    { path: '/', method: 'post' },
+  ]
 
   it.each(routes)('`$method` exists on $path', (route) => {
     expect(BookRouter.stack.some((layer) => Object.keys(layer.route.methods).includes(route.method))).toBe(true)
