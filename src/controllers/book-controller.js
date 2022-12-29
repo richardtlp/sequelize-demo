@@ -1,7 +1,7 @@
 const BookService = require('../services/book-service')
 
-const getBooksHandler = (_, res) => {
-  const books = BookService.getBooks()
+const getBooksHandler = async (_, res) => {
+  const books = await BookService.getBooks()
   res.status(200).json(books)
 }
 

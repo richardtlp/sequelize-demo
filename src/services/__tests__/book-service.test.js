@@ -1,42 +1,43 @@
 const { getBooks, insertABook } = require('../book-service')
 const model = require('../../../db/models')
 
-const dummyBookList = [
-  {
-    id: 1,
-    name: 'Harry Porter',
-    author: {
-      id: 1,
-      name: 'J K Rowling',
-    },
-    genre: 'Fiction',
-  },
-  {
-    id: 2,
-    name: 'Dreamy Eyes',
-    author: {
-      id: 2,
-      name: 'Nguyen Nhat Anh',
-    },
-    genre: 'Fiction',
-  },
-]
-
-const mockAuthor = {
-  id: 1,
-  name: 'J K Rowling',
-  createdAt: new Date(2023, 1, 1),
-  updatedAt: new Date(2023, 1, 1),
-}
-
 describe('test getBook', () => {
-  it('should return list of books', () => {
-    const books = getBooks()
-    expect(books).toStrictEqual(dummyBookList)
+  const mockBookList = [
+    {
+      id: 1,
+      name: 'Harry Porter',
+      author: {
+        id: 1,
+        name: 'J K Rowling',
+      },
+      genre: 'Fiction',
+    },
+    {
+      id: 2,
+      name: 'Dreamy Eyes',
+      author: {
+        id: 2,
+        name: 'Nguyen Nhat Anh',
+      },
+      genre: 'Fiction',
+    },
+  ]
+
+  it('should return list of books', async () => {
+    jest.spyOn(model.Book, 'findAll').mockResolvedValue(mockBookList)
+    const books = await getBooks()
+    expect(books).toStrictEqual(mockBookList)
   })
 })
 
 describe('test insertABook', () => {
+  const mockAuthor = {
+    id: 1,
+    name: 'J K Rowling',
+    createdAt: new Date(2023, 1, 1),
+    updatedAt: new Date(2023, 1, 1),
+  }
+
   const newBook = {
     name: 'Kane and Abel',
     authorName: 'J K Rowling',

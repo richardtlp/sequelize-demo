@@ -2,41 +2,34 @@ const BookService = require('../../services/book-service')
 const { getBooksHandler, insertABookHandler } = require('../book-controller')
 const createHttpError = require('http-errors')
 
-const mockBookList = [
-  {
-    id: 1,
-    name: 'Harry Porter',
-    author: {
-      id: 1,
-      name: 'J K Rowling',
-    },
-    genre: 'Fiction',
-  },
-  {
-    id: 2,
-    name: 'Dreamy Eyes',
-    author: {
-      id: 2,
-      name: 'Nguyen Nhat Anh',
-    },
-    genre: 'Fiction',
-  },
-]
-
-const mockAuthor = {
-  id: 1,
-  name: 'J K Rowling',
-  createdAt: new Date(2023, 1, 1),
-  updatedAt: new Date(2023, 1, 1),
-}
-
 describe('test getBooksHandler', () => {
-  it('should return list of books', () => {
+  const mockBookList = [
+    {
+      id: 1,
+      name: 'Harry Porter',
+      author: {
+        id: 1,
+        name: 'J K Rowling',
+      },
+      genre: 'Fiction',
+    },
+    {
+      id: 2,
+      name: 'Dreamy Eyes',
+      author: {
+        id: 2,
+        name: 'Nguyen Nhat Anh',
+      },
+      genre: 'Fiction',
+    },
+  ]
+
+  it('should return list of books', async () => {
     const mockRequest = { params: {} }
     const mockResponse = { status: jest.fn().mockReturnThis(), json: jest.fn() }
     jest.spyOn(BookService, 'getBooks').mockReturnValue(mockBookList)
 
-    getBooksHandler(mockRequest, mockResponse)
+    await getBooksHandler(mockRequest, mockResponse)
 
     expect(BookService.getBooks).toHaveBeenCalled()
     expect(mockResponse.status).toBeCalledWith(200)
@@ -45,6 +38,13 @@ describe('test getBooksHandler', () => {
 })
 
 describe('test insertABookHandler', () => {
+  const mockAuthor = {
+    id: 1,
+    name: 'J K Rowling',
+    createdAt: new Date(2023, 1, 1),
+    updatedAt: new Date(2023, 1, 1),
+  }
+
   const newBook = {
     name: 'Kane and Abel',
     authorName: 'J K Rowling',
